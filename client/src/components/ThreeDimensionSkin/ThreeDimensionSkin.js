@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import * as THREE from "three"
 import OrbitControls_ from "three-orbit-controls"
 import GLTFLoader from "three-gltf-loader"
-import model from "./maddogg.glb"
 
 const OrbitControls = OrbitControls_(THREE)
 
