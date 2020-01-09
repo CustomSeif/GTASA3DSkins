@@ -1,7 +1,7 @@
 import React from "react"
 import "./SkinSelection.css"
-import { Link } from "react-router-dom"
 import Loader from "../Loader/Loader"
+import SkinSelectionSkin from "./SkinSelectionSkin/SkinSelectionSkin"
 
 const SkinSelection = ({ skinSelection }) => {
     return (
@@ -11,9 +11,11 @@ const SkinSelection = ({ skinSelection }) => {
                 <Loader className="SkinSelection__loader" /> :
                 skinSelection.map((skin, index) => {
                     return (
-                        <Link to="/" key={index}>
-                            {skin.name}
-                        </Link>
+                        <SkinSelectionSkin imageURL={skin.imageURL}
+                            key={index}
+                            model={skin.model}
+                            name={skin.name}
+                        />
                     )
                 })
             }

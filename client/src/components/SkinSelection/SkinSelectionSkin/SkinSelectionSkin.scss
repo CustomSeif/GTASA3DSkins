@@ -1,0 +1,26 @@
+.SkinSelection__skin {
+    margin: 1rem;
+    width: 6.88rem;
+    text-decoration: none;
+    text-align: center;
+    transition: transform 0.25s;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+
+    &__image {
+        width: 100%;
+        height: 12.5rem;
+        opacity: 0;
+
+        &.true {
+            animation: fadeIn 0.5s forwards;
+        }
+    }
+
+    span {
+        color: white;
+        font-size: 0.75rem;
+    }
+}
