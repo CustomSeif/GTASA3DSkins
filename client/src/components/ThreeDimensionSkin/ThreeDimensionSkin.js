@@ -50,7 +50,7 @@ const ThreeDimensionSkin = ({ history }) => {
         }
 
         animate()
-    }, [renderer, modelURL])
+    })
 
     useEffect(() => () => root.current.removeChild( renderer.domElement ))
 
