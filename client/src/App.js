@@ -12,7 +12,7 @@ const App = () => {
             <div className="App">
                 <ThreeDimensionSkin history={history} />
 
-                <SkinSelection />
+                <SkinSelection history={history} />
             </div>
         </Router>
     )

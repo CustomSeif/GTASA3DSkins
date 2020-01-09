@@ -4,8 +4,8 @@ import axios from "axios"
 import Loader from "../Loader/Loader"
 import SkinSelectionSkin from "./SkinSelectionSkin/SkinSelectionSkin"
 
-const SkinSelection = () => {
-    const [visible, setVisible] = useState(true)
+const SkinSelection = ({ history }) => {
+    const [visible, setVisible] = useState(history.location.pathname === "/")
     const [skinSelection, setSkinSelection] = useState([])
 
     useEffect(() => {
@@ -42,6 +42,8 @@ const SkinSelection = () => {
                                 model={skin.model}
                                 modelURL={skin.modelURL}
                                 name={skin.name}
+                                visible={visible}
+                                setVisible={setVisible}
                             />
                         )
                     })

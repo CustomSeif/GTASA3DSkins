@@ -73,5 +73,6 @@
     to {
         opacity: 0;
         transform: scale(1.1);
+        pointer-events: none;
     }
 }

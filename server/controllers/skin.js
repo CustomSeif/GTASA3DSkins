@@ -10,7 +10,7 @@ router.get("/skin/:model", async (request, response) => {
                 name,
                 gender,
                 "modelURL",
-                lightingIntensity
+                "lightingIntensity"
                 FROM public.skins
                 WHERE model = $1;
             `,

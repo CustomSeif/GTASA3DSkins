@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import "./ThreeDimensionSkin.css"
 import * as THREE from "three"
 import OrbitControls_ from "three-orbit-controls"
 import GLTFLoader from "three-gltf-loader"
@@ -7,7 +8,11 @@ import axios from "axios"
 const OrbitControls = OrbitControls_(THREE)
 
 const ThreeDimensionSkin = ({ history }) => {
+    const [model, setModel] = useState(null)
+    const [name, setName] = useState(null)
+    const [gender, setGender] = useState(null)
     const [modelURL, setModelURL] = useState(null)
+    const [lightIntensity, setLightIntensity] = useState(null)
 
     const root = useRef()
 
@@ -15,8 +20,22 @@ const ThreeDimensionSkin = ({ history }) => {
 
     const getModelURL = async () => {
         const { data } = await axios.get(`/skin${history.location.pathname}`)
-        if (!data.length) setModelURL(null)
-        setModelURL(data[0].modelURL)
+
+        if (!data.length) {
+            setModel(null)
+            setName(null)
+            setGender(null)
+            setModelURL(null)
+            setLightIntensity(null)
+        }
+
+        else{
+            setModel(data[0].model)
+            setName(data[0].name)
+            setGender(data[0].gender)
+            setModelURL(data[0].modelURL)
+            setLightIntensity(data[0].lightIntensity)
+        }
     }
 
     useEffect(() => {
@@ -58,6 +77,19 @@ const ThreeDimensionSkin = ({ history }) => {
 
     return (
         <div className="ThreeDimensionSkin" ref={root}>
+            <div className="ThreeDimensionSkin__meta">
+                <h1>
+                    <span>{name}</span>
+                </h1>
+
+                <h2>
+                    <span>{gender}</span>
+                </h2>
+
+                <h2>
+                    <span>{`Model: ${model}`}</span>
+                </h2>
+            </div>
         </div>
     )
 }
