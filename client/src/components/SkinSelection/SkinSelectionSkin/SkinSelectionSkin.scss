@@ -9,6 +9,15 @@
         transform: scale(1.02);
     }
 
+    &--no-model {
+        filter: grayscale(1);
+
+        &:hover {
+            transform: scale(1.02);
+            cursor: not-allowed;
+        }
+    }
+
     &__image {
         width: 100%;
         height: 12.5rem;

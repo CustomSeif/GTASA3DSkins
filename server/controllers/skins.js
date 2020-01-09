@@ -8,7 +8,8 @@ router.get("/skins", async (_, response) => {
             SELECT
                 model,
                 name,
-                "imageURL"
+                "imageURL",
+                "modelURL"
             FROM public.skins
             ORDER BY id;
         `)

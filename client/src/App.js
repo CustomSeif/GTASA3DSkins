@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from "react"
-import { BrowserRouter } from "react-router-dom"
-import axios from "axios"
+import React from "react"
+import { Router } from "react-router-dom"
+import { createBrowserHistory } from "history"
 import ThreeDimensionSkin from "./components/ThreeDimensionSkin/ThreeDimensionSkin"
 import SkinSelection from "./components/SkinSelection/SkinSelection"
 
 const App = () => {
-    const [skinSelection, setSkinSelection] = useState(null)
-
-    useEffect(() => {
-        axios.get("/skins")
-            .then(({ data }) => setSkinSelection(data))
-    }, [])
+    let history = createBrowserHistory()
 
     return (
-        <BrowserRouter>
+        <Router history={history}>
             <div className="App">
-                <ThreeDimensionSkin />
+                <ThreeDimensionSkin history={history} />
 
-                <SkinSelection skinSelection={skinSelection} />
+                <SkinSelection />
             </div>
-        </BrowserRouter>
+        </Router>
     )
 }
 

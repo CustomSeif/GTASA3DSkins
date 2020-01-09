@@ -1,55 +1,65 @@
-import React, { Component } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import OrbitControls_ from "three-orbit-controls"
 import GLTFLoader from "three-gltf-loader"
+import axios from "axios"
 
 const OrbitControls = OrbitControls_(THREE)
 
-class ThreeDimensionSkin extends Component {
-    componentDidMount() {
-        this.renderer = new THREE.WebGLRenderer({ antialias: true })
-        this.renderer.setSize( window.innerWidth, window.innerHeight )
-        this.renderer.setClearColor( 0xDDDDDD )
-        this.root.appendChild( this.renderer.domElement )
+const ThreeDimensionSkin = ({ history }) => {
+    const [modelURL, setModelURL] = useState(null)
 
-        this.scene = new THREE.Scene()
-        this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
-        this.controls = new OrbitControls( this.camera, this.renderer.domElement )
-        this.light = new THREE.AmbientLight( 0xEEEEEE, 2 )
+    const root = useRef()
 
-        this.controls.autoRotate = true
-        this.camera.position.z = 1.5
-        this.scene.add( this.light )
+    const renderer = new THREE.WebGLRenderer({ antialias: true })
 
-        this.GLTFLoader = new GLTFLoader()
+    const getModelURL = async () => {
+        const { data } = await axios.get(`/skin${history.location.pathname}`)
+        if (!data.length) setModelURL(null)
+        setModelURL(data[0].modelURL)
+    }
 
-        this.GLTFLoader.load(
-            `https://res.cloudinary.com/custom/raw/upload/v1541334961/Skins/Models/vwmybox.glb`,
+    useEffect(() => {
+        if (history.location.pathname !== "/") getModelURL()
+
+        renderer.setSize( window.innerWidth, window.innerHeight )
+        renderer.setClearColor( 0xDDDDDD )
+        root.current.appendChild( renderer.domElement )
+
+        const scene = new THREE.Scene()
+        let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
+        let controls = new OrbitControls( camera, renderer.domElement )
+        const light = new THREE.AmbientLight( 0xEEEEEE, 2 )
+
+        controls.autoRotate = true
+        camera.position.z = 1.5
+        scene.add( light )
+
+        new GLTFLoader().load(
+            modelURL || "https://res.cloudinary.com/custom/raw/upload/v1541334600/Skins/Models/bb.glb",
             ( gltf ) => {
-                this.scene.add( gltf.scene )
+                scene.add( gltf.scene )
                 gltf.scene.rotation.y = 3.2
             }
         )
 
-        this.animate = () => {
-            requestAnimationFrame( this.animate )
-            this.renderer.render( this.scene, this.camera )
-            this.controls.update()
+        const animate = () => {
+            requestAnimationFrame( animate )
+            renderer.render( scene, camera )
+            controls.update()
         }
 
-        this.animate()
-    }
+        animate()
+    }, [renderer, modelURL])
 
-    componentWillUnmount() {
-        this.root.removeChild( this.renderer.domElement )
-    }
+    useEffect(() => () => root.current.removeChild( renderer.domElement ))
 
-    render() {
-        return (
-            <div className="ThreeDimensionSkin" ref={(element) => this.root = element}>
-            </div>
-        )
-    }
+    history.listen(() => getModelURL())
+
+    return (
+        <div className="ThreeDimensionSkin" ref={root}>
+        </div>
+    )
 }
 
 export default ThreeDimensionSkin
