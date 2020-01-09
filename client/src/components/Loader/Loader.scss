@@ -1,0 +1,19 @@
+.Loader {
+    margin: 0 0.5rem;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation-name: centeralRotate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+
+    circle {
+        fill: transparent;
+        stroke: url(#loader-gradient);
+        stroke-width: 0.2rem;
+    }
+}
+
+@keyframes centeralRotate {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
