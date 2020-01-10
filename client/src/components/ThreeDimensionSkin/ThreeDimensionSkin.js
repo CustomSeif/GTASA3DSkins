@@ -37,7 +37,7 @@ class ThreeDimensionSkin extends Component {
         this.scene = new THREE.Scene()
         this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
         this.controls = new OrbitControls( this.camera, this.renderer.domElement )
-        this.light = new THREE.AmbientLight( 0xEEEEEE, 2 )
+        this.light = new THREE.AmbientLight( 0xEEEEEE, this.state.lightingIntensity )
 
         this.controls.autoRotate = true
         this.camera.position.z = 1.5
@@ -89,6 +89,10 @@ class ThreeDimensionSkin extends Component {
 
                     <h2>
                         <span>{`Model: ${this.state.model}`}</span>
+                    </h2>
+
+                    <h2>
+                        <span>By: Mohamed Seif Khalid</span>
                     </h2>
                 </div>
             </div>

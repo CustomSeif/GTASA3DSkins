@@ -1,83 +1,6 @@
 .ThreeDimensionSkin {
     position: relative;
 
-    input[type=range] {
-        position: absolute;
-        bottom: 0;
-        left: 1.25rem;
-        width: 30%;
-        height: 3rem;
-        -webkit-appearance: none;
-        background: transparent;
-    }
-
-    // Webkit
-    input[type=range]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 2rem;
-        height: 2rem;
-        border-radius: 100%;
-        border: solid 0.2rem white;
-        background-color: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(2rem);
-        cursor: pointer;
-        margin-top: -1rem;
-    }
-
-    input[type=range]::-webkit-slider-runnable-track {
-        background-color: rgba(255, 255, 255, 0.8);
-        height: 0.25rem;
-        border-radius: 0.2rem;
-    }
-
-    input[type=range]:focus::-webkit-slider-runnable-track {
-        background-color: white;
-    }
-
-    // Mozilla
-    input[type=range]::-moz-range-thumb {
-        width: 1.6rem;
-        height: 1.6rem;
-        border-radius: 100%;
-        border: solid 0.2rem white;
-        background-color: rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-    }
-
-    input[type=range]::-moz-range-track {
-        background-color: rgba(255, 255, 255, 0.8);
-        height: 0.25rem;
-        border-radius: 0.2rem;
-    }
-
-    // Microsoft
-    input[type=range]::-ms-thumb {
-        width: 1.6rem;
-        height: 1.6rem;
-        border-radius: 100%;
-        border: solid 0.2rem white;
-        background-color: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(2rem);
-        cursor: pointer;
-    }
-
-    input[type=range]::-ms-track {
-        background-color: rgba(255, 255, 255, 0.8);
-        height: 0.25rem;
-        border-radius: 0.2rem;
-    }
-
-    input[type=range]:focus {
-        outline: none;
-    }
-      
-    input[type=range]::-ms-track {
-        cursor: pointer;
-        background: transparent; 
-        border-color: transparent;
-        color: transparent;
-    }
-
     &__meta {
         position: absolute;
         top: 0;
@@ -88,7 +11,7 @@
         flex-direction: column;
         justify-content: flex-end;
         padding-left: 1rem;
-        padding-bottom: 3rem;
+        padding-bottom: 1rem;
         pointer-events: none;
 
         h1, h2 {
