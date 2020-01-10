@@ -16,7 +16,19 @@ const SkinSelection = ({ history }) => {
     useEffect(() => {
         if (history.location.pathname !== "/" && visible) {
             const currentSelectedSkin = document.querySelector(`.SkinSelection__skin--${history.location.pathname.replace("/", "")}`)
-            if (currentSelectedSkin) currentSelectedSkin.scrollIntoView()
+
+            if (currentSelectedSkin) {
+                const rectangle = currentSelectedSkin.getBoundingClientRect()
+
+                const isAlreadyInView = Boolean(
+                    rectangle.top >= 0 &&
+                    rectangle.left >= 0 &&
+                    rectangle.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rectangle.right <= (window.innerWidth || document.documentElement.clientWidth)
+                )
+
+                if (!isAlreadyInView) currentSelectedSkin.scrollIntoView()
+            }
         }
     })
 
