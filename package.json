@@ -1,10 +1,14 @@
 {
     "name": "gta-sa-3d-skins",
     "version": "1.0.0",
-    "main": "server/index.js",
     "repository": "https://github.com/CustomSeif/GTASA3DSkins.git",
     "author": "Seif <msk-7@outlook.com>",
-    "license": "MIT",
+    "license": "UNLICENSED",
+    "main": "server/index.js",
+    "scripts": {
+        "start": "node server/index.js",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+      },
     "dependencies": {
         "express": "^4.17.1",
         "pg": "^7.17.0"
