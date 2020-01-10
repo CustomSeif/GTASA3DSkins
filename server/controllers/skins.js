@@ -6,6 +6,7 @@ router.get("/skins", async (_, response) => {
     try {
         const query = await database.query(`
             SELECT
+                id,
                 model,
                 name,
                 "imageURL",

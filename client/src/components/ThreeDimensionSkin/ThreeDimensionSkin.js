@@ -8,6 +8,7 @@ import GLTFLoader from "three-gltf-loader"
 const OrbitControls = OrbitControls_(THREE)
 
 const defaultSkin = {
+    id: 5,
     model: "bb",
     name: "Barry 'Big Bear' Thorne [Big]",
     gender: "Male",
@@ -84,11 +85,13 @@ class ThreeDimensionSkin extends Component {
                     </h1>
 
                     <h2>
-                        <span>{this.state.gender}</span>
+                        <span>{`Id: ${this.state.id}`}</span>
+                        <span>{`Model: ${this.state.model}`}</span>
                     </h2>
 
                     <h2>
-                        <span>{`Model: ${this.state.model}`}</span>
+                        <span>{`Gender: ${this.state.gender}`}</span>
+                        <span>{`Light Intensity: ${this.state.lightingIntensity}`}</span>
                     </h2>
 
                     <h2>

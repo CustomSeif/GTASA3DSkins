@@ -6,7 +6,8 @@ router.get("/skin/:model", async (request, response) => {
     try {
         const query = await database.query(
             `
-                SELECT model,
+                SELECT id,
+                model,
                 name,
                 gender,
                 "modelURL",

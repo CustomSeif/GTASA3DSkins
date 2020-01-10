@@ -37,7 +37,8 @@ const SkinSelection = ({ history }) => {
                     <Loader className="SkinSelection__loader" /> :
                     skinSelection.map((skin, index) => {
                         return (
-                            <SkinSelectionSkin imageURL={skin.imageURL}
+                            <SkinSelectionSkin id={skin.id}
+                                imageURL={skin.imageURL}
                                 key={index}
                                 model={skin.model}
                                 modelURL={skin.modelURL}
