@@ -4,6 +4,7 @@ import axios from "axios"
 import * as THREE from "three"
 import OrbitControls_ from "three-orbit-controls"
 import GLTFLoader from "three-gltf-loader"
+import { Helmet } from "react-helmet"
 
 const OrbitControls = OrbitControls_(THREE)
 
@@ -107,6 +108,16 @@ class ThreeDimensionSkin extends Component {
     render() {
         return (
             <div className="ThreeDimensionSkin" ref={(element) => this.root = element}>
+                {
+                    this.props.history.location.pathname !== "/" ?
+                    (
+                        <Helmet>
+                            <title>{this.state.name} - GTA San Andreas 3D Skins</title>
+                        </Helmet>
+                    ) :
+                    null
+                }
+
                 <button className="ThreeDimensionSkin__navigation-button ThreeDimensionSkin__navigation-button--left"
                     onClick={this.handlePrevious}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
