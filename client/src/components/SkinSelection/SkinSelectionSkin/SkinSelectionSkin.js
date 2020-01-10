@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import "./SkinSelectionSkin.css"
 import { Link } from "react-router-dom"
 
-const SkinSelectionSkin = ({ id, imageURL, model, modelURL, name, visible, setVisible }) => {
+const SkinSelectionSkin = ({ id, imageURL, isCurrent, model, modelURL, name, visible, setVisible }) => {
     const [imageLoaded, setImageLoaded] = useState(false)
 
     if (modelURL === "No URL") return (
@@ -20,7 +20,9 @@ const SkinSelectionSkin = ({ id, imageURL, model, modelURL, name, visible, setVi
     )
 
     return (
-        <Link className="SkinSelection__skin" to={`/${model}`} onClick={() => setVisible(!visible)}>
+        <Link className={`SkinSelection__skin SkinSelection__skin--${model} ${isCurrent ? "SkinSelection__skin--current" : ""}`}
+            onClick={() => setVisible(!visible)}
+            to={`/${model}`}>
             <img alt={name}
                 className={`SkinSelection__skin__image ${imageLoaded}`}
                 onLoad={() => setImageLoaded(true)}

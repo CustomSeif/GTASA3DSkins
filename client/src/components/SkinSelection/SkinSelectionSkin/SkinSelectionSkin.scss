@@ -9,6 +9,10 @@
         transform: scale(1.02);
     }
 
+    &--current {
+        border: solid 0.1rem white;
+    }
+
     &--no-model {
         filter: grayscale(1);
 

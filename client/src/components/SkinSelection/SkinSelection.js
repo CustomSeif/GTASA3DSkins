@@ -13,6 +13,13 @@ const SkinSelection = ({ history }) => {
             .then(({ data }) => setSkinSelection(data))
     }, [])
 
+    useEffect(() => {
+        if (history.location.pathname !== "/" && visible) {
+            const currentSelectedSkin = document.querySelector(`.SkinSelection__skin--${history.location.pathname.replace("/", "")}`)
+            if (currentSelectedSkin) currentSelectedSkin.scrollIntoView()
+        }
+    })
+
     return (
         <Fragment>
             {
@@ -39,6 +46,7 @@ const SkinSelection = ({ history }) => {
                         return (
                             <SkinSelectionSkin id={skin.id}
                                 imageURL={skin.imageURL}
+                                isCurrent={history.location.pathname.replace("/", "") === skin.model}
                                 key={index}
                                 model={skin.model}
                                 modelURL={skin.modelURL}
