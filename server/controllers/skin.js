@@ -26,4 +26,28 @@ router.get("/skin/:model", async (request, response) => {
     }
 })
 
+router.get("/skin-id/:id", async (request, response) => {
+    try {
+        const query = await database.query(
+            `
+                SELECT id,
+                model,
+                name,
+                gender,
+                "modelURL",
+                "lightingIntensity"
+                FROM public.skins
+                WHERE id = $1;
+            `,
+            [request.params.id]
+        )
+
+        response.json(query.rows)
+    }
+
+    catch(error) {
+        console.error(error)
+    }
+})
+
 module.exports = router

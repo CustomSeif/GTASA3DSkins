@@ -1,5 +1,35 @@
 .ThreeDimensionSkin {
     position: relative;
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
+
+    &__navigation-button {
+        position: absolute;
+        top: 50%;
+        width: 3rem;
+        height: 3rem;
+        background-color: transparent;
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 100%;
+        backdrop-filter: blur(2rem);
+        transform: translateY(-50%);
+
+        svg {
+            fill: white;
+        }
+
+        &--left {
+            left: 1rem;
+        }
+
+        &--right {
+            right: 1rem;
+        }
+    }
 
     &__meta {
         position: absolute;
@@ -24,6 +54,12 @@
             border-radius: 0.1rem;
             padding: 0.1rem 0.25rem;
             margin: 0 0.25rem;
+        }
+
+        &__author > span {
+            background-color: rgba(255, 140, 0, 0.7);
+            color: black;
+            padding: 0.25rem 0.25rem;
         }
     }
 }
