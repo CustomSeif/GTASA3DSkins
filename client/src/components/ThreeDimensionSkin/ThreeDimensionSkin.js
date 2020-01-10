@@ -1,97 +1,99 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { Component } from "react"
 import "./ThreeDimensionSkin.css"
+import axios from "axios"
 import * as THREE from "three"
 import OrbitControls_ from "three-orbit-controls"
 import GLTFLoader from "three-gltf-loader"
-import axios from "axios"
 
 const OrbitControls = OrbitControls_(THREE)
 
-const ThreeDimensionSkin = ({ history }) => {
-    const [model, setModel] = useState(null)
-    const [name, setName] = useState(null)
-    const [gender, setGender] = useState(null)
-    const [modelURL, setModelURL] = useState(null)
-    const [lightIntensity, setLightIntensity] = useState(null)
+const defaultSkin = {
+    model: "bb",
+    name: "Barry 'Big Bear' Thorne [Big]",
+    gender: "Male",
+    modelURL: "https://res.cloudinary.com/custom/raw/upload/v1541334600/Skins/Models/bb.glb",
+    lightingIntensity: 2
+}
 
-    const root = useRef()
+class ThreeDimensionSkin extends Component {
+    state = defaultSkin
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true })
+    handleGetSkin = () => new Promise(resolve => {
+        axios.get(`/skin${this.props.history.location.pathname}`)
+            .then(({ data }) => {
+                if (data.length) this.setState({ ...data[0] }, () => resolve())
+                else this.setState(defaultSkin, () => resolve())
+            })
+    })
 
-    const getModelURL = async () => {
-        const { data } = await axios.get(`/skin${history.location.pathname}`)
+    handleRender = () => {
+        if (this.root.lastChild.tagName === "CANVAS") this.root.lastChild.remove()
 
-        if (!data.length) {
-            setModel(null)
-            setName(null)
-            setGender(null)
-            setModelURL(null)
-            setLightIntensity(null)
-        }
+        this.renderer = new THREE.WebGLRenderer({ antialias: true })
+        this.renderer.setSize( window.innerWidth, window.innerHeight )
+        this.renderer.setClearColor( 0xDDDDDD )
+        this.root.appendChild( this.renderer.domElement )
 
-        else{
-            setModel(data[0].model)
-            setName(data[0].name)
-            setGender(data[0].gender)
-            setModelURL(data[0].modelURL)
-            setLightIntensity(data[0].lightIntensity)
-        }
-    }
+        this.scene = new THREE.Scene()
+        this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
+        this.controls = new OrbitControls( this.camera, this.renderer.domElement )
+        this.light = new THREE.AmbientLight( 0xEEEEEE, 2 )
 
-    useEffect(() => {
-        if (history.location.pathname !== "/") getModelURL()
+        this.controls.autoRotate = true
+        this.camera.position.z = 1.5
+        this.scene.add( this.light )
 
-        renderer.setSize( window.innerWidth, window.innerHeight )
-        renderer.setClearColor( 0xDDDDDD )
-        root.current.appendChild( renderer.domElement )
+        this.GLTFLoader = new GLTFLoader()
 
-        const scene = new THREE.Scene()
-        let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
-        let controls = new OrbitControls( camera, renderer.domElement )
-        const light = new THREE.AmbientLight( 0xEEEEEE, 2 )
-
-        controls.autoRotate = true
-        camera.position.z = 1.5
-        scene.add( light )
-
-        new GLTFLoader().load(
-            modelURL || "https://res.cloudinary.com/custom/raw/upload/v1541334600/Skins/Models/bb.glb",
+        this.GLTFLoader.load(
+            this.state.modelURL,
             ( gltf ) => {
-                scene.add( gltf.scene )
+                this.scene.add( gltf.scene )
                 gltf.scene.rotation.y = 3.2
             }
         )
 
-        const animate = () => {
-            requestAnimationFrame( animate )
-            renderer.render( scene, camera )
-            controls.update()
+        this.animate = () => {
+            requestAnimationFrame( this.animate )
+            this.renderer.render( this.scene, this.camera )
+            this.controls.update()
         }
 
-        animate()
-    })
+        this.animate()
+    }
 
-    useEffect(() => () => root.current.removeChild( renderer.domElement ))
+    async componentDidMount() {
+        if (this.props.history.location.pathname !== "/") this.handleGetSkin().then(this.handleRender)
+        else this.handleRender()
 
-    history.listen(() => getModelURL())
+        this.props.history.listen(() => {
+            this.handleGetSkin().then(this.handleRender)
+        })
+    }
 
-    return (
-        <div className="ThreeDimensionSkin" ref={root}>
-            <div className="ThreeDimensionSkin__meta">
-                <h1>
-                    <span>{name}</span>
-                </h1>
+    componentWillUnmount() {
+        this.root.removeChild( this.renderer.domElement )
+    }
 
-                <h2>
-                    <span>{gender}</span>
-                </h2>
+    render() {
+        return (
+            <div className="ThreeDimensionSkin" ref={(element) => this.root = element}>
+                <div className="ThreeDimensionSkin__meta">
+                    <h1>
+                        <span>{this.state.name}</span>
+                    </h1>
 
-                <h2>
-                    <span>{`Model: ${model}`}</span>
-                </h2>
+                    <h2>
+                        <span>{this.state.gender}</span>
+                    </h2>
+
+                    <h2>
+                        <span>{`Model: ${this.state.model}`}</span>
+                    </h2>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default ThreeDimensionSkin
