@@ -46,3 +46,7 @@ The exported files:
 ![The exported glb files](/assets/exported-models.jpg)
 
 
+## Upload To CDN
+I uploaded all the .glb files to my cloudianry CDN. I then used the Cloudinary resource API to list all the files. Next, I wrote a Node script to update the database with all the model urls.
+
+![Database rows with model urls](/assets/database-populated-with-model-urls.jpg)
