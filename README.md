@@ -50,3 +50,8 @@ The exported files:
 I uploaded all the .glb files to my cloudianry CDN. I then used the Cloudinary resource API to list all the files. Next, I wrote a Node script to update the database with all the model urls.
 
 ![Database rows with model urls](/assets/database-populated-with-model-urls.jpg)
+
+## The Web App
+The web app is a React application that uses the Three.js GLTF loader to render the 3D models. It has a selection menu, next and previous buttons and different lighting intensity for different models that I set manually one by one. I also made sure to make the routes load different characters for sharing purposes.
+
+![GTA SA 3D Skins Web App](/assets/web-app.gif)
