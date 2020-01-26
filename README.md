@@ -6,7 +6,7 @@ GTA San Andreas 3D Skins is a web app where users can view all the GTA San Andre
 ## Database Population
 I needed to populate the database with information about every character skin, so, I scraped the [SAMP Wiki All Skins page](https://wiki.sa-mp.com/wiki/Skins:All) and automated extracting the model name, skin name/type and the gender. For the images I found a SAMP forum post that had them all compressed for download, so I extracted them, ran a script to rename them based on the skins ids, uploaded them to my cloudinary CDN and then ran an update script to populate the image url column in the database.
 
-![Database populated from scrape](/assets/database-populated-from-scrape.jpg)
+![Database populated from scrape](/client/public/assets/database-populated-from-scrape.jpg)
 
 ## Extracting 3D Models from GTA San Andreas
 I used an img tool to extract all of the .txd and .dff files from the gta3.img file. It would take for ever to get the model name, search for the .txd, extract it, search for the .dff, extract it and repeat that 300 times in a buggy tool. So I exported everything to a single folder and since I had the model names in a database I was able to filter the files needed.
@@ -16,7 +16,7 @@ Three.js is a popular library for doing 3D on the web. After alot of experimenta
 
 Now that I setteled on a file format I needed to find a way to import .DFFs and .TXDs to Blender. Thankfully, there was a Blender addon that the GTA modding community create that allowed importing TXDs and DFFs.
 
-![GTA SA Skin Imported To Blender](/assets/blender-gta-import.jpg)
+![GTA SA Skin Imported To Blender](/client/public/assets/blender-gta-import.jpg)
 
 So all that was left is to import the character models and export them to .glb one by one. Which I was able to automate using python, specifically the bpy package that allows you to control blender using python. The code looked something like this:
 
@@ -43,15 +43,15 @@ for root, dirs, files in os.walk(path):
 
 The exported files:
 
-![The exported glb files](/assets/exported-models.jpg)
+![The exported glb files](/client/public/assets/exported-models.jpg)
 
 
 ## Upload To CDN
 I uploaded all the .glb files to my cloudianry CDN. I then used the Cloudinary resource API to list all the files. Next, I wrote a Node script to update the database with all the model urls.
 
-![Database rows with model urls](/assets/database-populated-with-model-urls.jpg)
+![Database rows with model urls](/client/public/assets/database-populated-with-model-urls.jpg)
 
 ## The Web App
 The web app is a React application that uses the Three.js GLTF loader to render the 3D models. It has a selection menu, next and previous buttons and different lighting intensity for different models that I set manually one by one. I also made sure to make the routes load different characters for sharing purposes.
 
-![GTA SA 3D Skins Web App](/assets/web-app.gif)
+![GTA SA 3D Skins Web App](/client/public/assets/web-app.gif)
