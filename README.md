@@ -9,16 +9,16 @@ I needed to populate the database with information about every character skin, s
 ![Database populated from scrape](/client/public/assets/database-populated-from-scrape.jpg)
 
 ## Extracting 3D Models from GTA San Andreas
-I used an img tool to extract all of the .txd and .dff files from the gta3.img file. It would take for ever to get the model name, search for the .txd, extract it, search for the .dff, extract it and repeat that 300 times in a buggy tool. So I exported everything to a single folder and since I had the model names in a database I was able to filter the files needed.
+I used an img tool to extract all of the .txd and .dff files from the gta3.img file. It would take forever to get the model name, search for the .txd, extract it, search for the .dff, extract it and repeat that 300 times in a buggy tool. So I exported everything to a single folder and since I had the model names in a database I was able to filter the files needed.
 
 ## Converting The Models To A Web Friendly Format
-Three.js is a popular library for doing 3D on the web. After alot of experimentation with the file formats Three.js supported I settled on .glb which is GLTF but in binary format, the advantages were that it was a single file (it didn't need another texture bitmap file to accompany it) and it was exportable from Blender.
+Three.js is a popular library for doing 3D on the web. After a lot of experimentation with the file formats Three.js supported I settled on .glb which is GLTF but in binary format, the advantages were that it was a single file (it didn't need another texture bitmap file to accompany it) and it was exportable from Blender.
 
-Now that I setteled on a file format I needed to find a way to import .DFFs and .TXDs to Blender. Thankfully, there was a Blender addon that the GTA modding community create that allowed importing TXDs and DFFs.
+Now that I settled on a file format I needed to find a way to import .DFFs and .TXDs to Blender. Thankfully, there was a Blender addon that the GTA modding community create that allowed importing TXDs and DFFs.
 
 ![GTA SA Skin Imported To Blender](/client/public/assets/blender-gta-import.jpg)
 
-So all that was left is to import the character models and export them to .glb one by one. Which I was able to automate using python, specifically the bpy package that allows you to control blender using python. The code looked something like this:
+So all that was left was to import the character models and export them to .glb one by one. Which I was able to automate using python, specifically the bpy package that allows you to control blender using python. The code looked something like this:
 
 ```
 models = [ "an", "array", "with", "all", "the", "model", "names", "from", "the", "database"]
@@ -47,7 +47,7 @@ The exported files:
 
 
 ## Upload To CDN
-I uploaded all the .glb files to my cloudianry CDN. I then used the Cloudinary resource API to list all the files. Next, I wrote a Node script to update the database with all the model urls.
+I uploaded all the .glb files to my cloudinary CDN. I then used the Cloudinary resource API to list all the files. Next, I wrote a Node script to update the database with all the model urls.
 
 ![Database rows with model urls](/client/public/assets/database-populated-with-model-urls.jpg)
 
